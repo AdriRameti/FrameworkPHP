@@ -1,6 +1,6 @@
 <?php
-//Agregamos la ruta, el controlador y el metodo
+//Agregamos la ruta y el controlador
 router::add("contact","controller_contact","contact"); 
 router::add("home","controller_home");
 router::add("shop","controller_shop");
-// router::add("home","controller_home","categories");
+router::add("cart","controller_cart");

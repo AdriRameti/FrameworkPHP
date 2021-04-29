@@ -1,11 +1,14 @@
 function show_cart(){
         if(localStorage.getItem('token')){
             var usuario = localStorage.getItem('nomUser');
+            var url = '?page=cart&op=showCart';        
+            friendlyURL(url).then(function(ruta){
             $.ajax({
-                type: 'GET',
+                type: 'POST',
                 dataType:'JSON',
-                url:'modulo/carrito/controlador/controller_cart.php?op=showCart&user='+usuario,
-                success:(function(data){
+                url:ruta,
+                data:{user:usuario}
+                ,success:(function(data){
                     console.log(data);
                     var total=0;
                     $('<div></div>').attr('class','table_tittle').attr('id','titul').appendTo('#contenedor');
@@ -22,9 +25,9 @@ function show_cart(){
                     x=0;
                     for(row in data){
                         var codigoProd = data[row].codigo;
-                        console.log(codigoProd);
+                        // console.log(codigoProd);
                     $('<div></div>').attr('class','table_item').attr('id','item'+x).appendTo('#contenedor');
-                    $('<img></img>').attr('src',''+data[row].img+'').attr('class','imag').appendTo('#item'+x);
+                    $('<img></img>').attr('src','http://localhost/FrameworkPHP/'+data[row].img+'').attr('class','imag').appendTo('#item'+x);
                     $('<div></div>').attr('class','table_item').attr('id','item1'+x).appendTo('#contenedor');
                     $('<a>'+data[row].precio+'€</a>').appendTo('#item1'+x);
                     $('<div></div>').attr('class','table_item').attr('id','item2'+x).appendTo('#contenedor');
@@ -42,30 +45,53 @@ function show_cart(){
                     $('<a>Total</a>').appendTo('#total');
 
                     $('<div></div>').attr('class','table_preu').attr('id','preu').appendTo('#contenedor');
-                    $('<a>'+total+'€</a>').attr('id','preu2').appendTo('#preu');
+                    $('<a>0€</a>').attr('id','preu2').appendTo('#preu');
                     $('<a>Seguir Comprando</a>').attr('class','btn-cart botones').attr('id','go').appendTo('#button-cart');
                     $('<a>Finalizar compra</a>').attr('class','btn-cart botones').attr('id','ext').appendTo('#button-cart');
                 })
             });
+        });
+        }else if(!localStorage.getItem('token')){
+            $('<div></div>').attr('class','table_tittle').attr('id','titul').appendTo('#contenedor');
+            $('<a>Pedido</a>').appendTo('#titul');
+            
+            $('<div></div>').attr('class','table_header').attr('id','header0').appendTo('#contenedor');
+            $('<a>Imagen</a>').appendTo('#header0');
+            $('<div></div>').attr('class','table_header').attr('id','header1').appendTo('#contenedor');
+            $('<a>Precio</a>').appendTo('#header1');
+            $('<div></div>').attr('class','table_header').attr('id','header2').appendTo('#contenedor');
+            $('<a>Cantidad</a>').appendTo('#header2');
+            $('<div></div>').attr('class','table_header').attr('id','header3').appendTo('#contenedor');
+            $('<a>Subtotal</a>').appendTo('#header3');
+
+            $('<div></div>').attr('class','table_tot').attr('id','total').appendTo('#contenedor');
+            $('<a>Total</a>').appendTo('#total');
+
+            $('<div></div>').attr('class','table_preu').attr('id','preu').appendTo('#contenedor');
+            $('<a>0€</a>').attr('id','preu2').appendTo('#preu');
+            $('<a>Seguir Comprando</a>').attr('class','btn-cart botones').attr('id','go').appendTo('#button-cart');
+            $('<a>Finalizar compra</a>').attr('class','btn-cart botones').attr('id','ext').appendTo('#button-cart');
         }
 
 }
 function finishcart(){
-    console.log('entro');
     $(document).on('click','#go',function(){
-        window.location.href="index.php?page=list_shop";
+        window.location.href="/FrameworkPHP/shop/list";
     });
     $(document).on('click','#ext',function(){
        if (localStorage.getItem('token')){
+           var url = '?page=cart&op=deleteCart';
+        friendlyURL(url).then(function(ruta){
            $.ajax({
             type:'GET',
             dataType:'JSON',
-            url:'modulo/carrito/controlador/controller_cart.php?op=delete_cart',
+            url:ruta,
             success:(function(data){
-                console.log(data);
-                window.location.href="index.php?homepage";
+                // console.log(data);
+                window.location.href="/FrameworkPHP/home/list";
             })
            });
+        });
        }else{
            window.location.href="index.php?page=login";
        }
@@ -73,44 +99,56 @@ function finishcart(){
 }
 function rediCart(){
     $(document).on('click','.cesta',function(){
-        window.location.href='index.php?page=list_cart';
+        window.location.href='/FrameworkPHP/cart/list';
         return false;
     });
 }
 function update_cantity(){
     $(document).on('click','.cantity' ,function(){
         var codProd = this.getAttribute('id');
+        var url = '?page=cart&op=update_cantity';
+        friendlyURL(url).then(function(ruta){
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             dataType: 'JSON',
-            url:'modulo/carrito/controlador/controller_cart.php?op=upadate_cantity&codProd='+codProd,
+            url:ruta,
+            data: {codProd:codProd},
             success:(function(data){
                 console.log(data);
             })
         });
+    });
         location.reload();
     });
     $(document).on('click','.cantity2' ,function(){
         var codProd = this.getAttribute('id');
+        var url = '?page=cart&op=less_cantity';
+        friendlyURL(url).then(function(ruta){
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             dataType: 'JSON',
-            url:'modulo/carrito/controlador/controller_cart.php?op=less_cantity&codProd='+codProd,
+            url:ruta,
+            data:{codProd:codProd},
             success:(function(data){
                 // alert(data);
                 if (data==0){
+                    var url2 = '?page=cart&op=delete_item';
+                    friendlyURL(url).then(function(ruta2){
                     $.ajax({
-                        type: 'GET',
+                        type: 'POST',
                         dataType: 'JSON',
-                        url:'modulo/carrito/controlador/controller_cart.php?op=sup_item&codProd='+codProd,
+                        url:ruta2,
+                        data:{codProd:codProd},
                         success:(function(data){
                             console.log(data);                  
                             location.reload();
                         })
                     });
+                });
                 }
             })
         });
+    });
         location.reload();
     });
 }
@@ -127,24 +165,31 @@ function click_items_cart(){
     });
 }
 function insert_items(usuario,codArticulo){
+    var url = '?page=cart&op=insert_item';
+    friendlyURL(url).then(function(ruta){
     $.ajax({
-        type:'GET',
+        type:'POST',
         dataType:'JSON',
-        url:'modulo/carrito/controlador/controller_cart.php?op=insertItems&usuario='+usuario+'&codArticulo='+codArticulo,
+        url:ruta,
+        data:{
+            usuario:usuario,
+            codArticulo:codArticulo
+        },
         success:(function(data){
             console.log(data);
         })
     });
+});
 }
 function load_contenido(){
+
+        
         $('<div></div>').attr('class','container-table').attr('id','contenedor').appendTo('#table_cart');
         $('<div></div>').attr('class','button-cart').attr('id','button-cart').appendTo('#table_cart');
         show_cart();
         update_cantity();
         finishcart();
-
 }
-
 window.addEventListener('load', function(){
     load_contenido();
     click_items_cart();

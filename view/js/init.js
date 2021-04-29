@@ -5,10 +5,11 @@ var token1 = localStorage.getItem('token');
  if(token1 != null){
     var token2 =token1.split(" ");
     var token = token2[0].replace(/['"]+/g, '');
+  
     $.ajax({
         type:'GET',
         dataType:'JSON',
-        url:'modulo/login/controlador/controller_login.php?op=menu&token='+token,
+        url:'/Ejercicios_PHP/modulo/login/controlador/controller_login.php?op=menu&token='+token,
         success:(function(data){
             localStorage.setItem('nomUser',data[0]);
             switch (data[2]){
@@ -39,7 +40,7 @@ function log_out(){
 function adminMenu(nombre,avatar){
     $('<li></li>').attr('class','homeMen').appendTo('#opc_menus');
     $('<div></div>').attr('class','home homeMen1').appendTo('.homeMen');
-    $('<a>Homepage</a>').attr('href','index.php?page=homepage').attr('data-tr','Homepage').appendTo('.homeMen');
+    $('<a>Homepage</a>').attr('href','?page=home&op=list').attr('data-tr','Homepage').appendTo('.homeMen');
 
 
     $('<li></li>').attr('class','men').appendTo('#opc_menus');
@@ -88,10 +89,10 @@ function adminMenu(nombre,avatar){
 function clienteMenu(nombre,avatar){
     $('<li></li>').attr('class','homeMen').appendTo('#opc_menus');
     $('<div></div>').attr('class','home homeMen1').appendTo('.homeMen');
-    $('<a>Homepage</a>').attr('href','index.php?page=homepage').attr('data-tr','Homepage').appendTo('.homeMen');
+    $('<a>Homepage</a>').attr('href','/FrameworkPHP/home/list').attr('data-tr','Homepage').appendTo('.homeMen');
 
     $('<li></li>').attr('class','men1').appendTo('#opc_menus');
-    $('<a>Tienda</a>').attr('href','index.php?page=list_shop').appendTo('.men1');
+    $('<a>Tienda</a>').attr('href','/FrameworkPHP/shop/list').appendTo('.men1');
 
     $('<li></li>').attr('class','about').appendTo('#opc_menus');
     $('<a>About Us</a>').attr('href','index.php?page=aboutus').attr('data-tr','About Us').appendTo('.about');

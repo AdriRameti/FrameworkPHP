@@ -155,7 +155,7 @@ function buscar2(){
     }
   function rediCart(){
       $(document).on('click','.cesta',function(){
-          window.location.href='index.php?page=list_cart';
+          window.location.href='/FrameworkPHP/cart/list';
           return false;
       });
   }
