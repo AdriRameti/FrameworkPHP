@@ -57,9 +57,10 @@ if(document.formulario_register.contrase.value.length==0){
 }
 
 function login_view(){
-    
+    var url = '?page=login&op=show_View';
+    friendlyURL(url).then(function(ruta){
     $.ajax({
-        url:"/Ejercicios_PHP/modulo/login/controlador/controller_login.php?op=showLogin",
+        url:ruta,
         type:'GET',
         dataType:'JSON',
         success: function (data){
@@ -87,7 +88,8 @@ function login_view(){
                     show_registers(); 
         }
         
-    })
+    });
+});
     
 }
 function show_logins(){
@@ -143,10 +145,12 @@ function register(){
         e.preventDefault();
         if (validate_register() !=0){
             var data = $('#formulario_register').serialize(); 
+            var url = '?page=login&op=register';
+            friendlyURL(url).then(function(ruta){
             $.ajax({
                 type:'POST',
                 data: data,
-                url: 'modulo/login/controlador/controller_login.php?op=register',
+                url: ruta,
                 success:(function(respuesta){
                     if(respuesta==1){
                         // console.log(window.location.href); Como saber en que url estamos en js
@@ -156,13 +160,14 @@ function register(){
                        
                         
                     }else{
-                        window.location.href="index.php?page=login";
+                        window.location.href="/FrameworkPHP/login/list";
 
                     }
                     
 
                 })
             });
+        });
         }
     });
 }
@@ -170,27 +175,30 @@ function login(){
     $(document).on('click','#btn_login',function(e){
         e.preventDefault();
         if (validate_login() !=0){
-            var datos = $('#formulario_login').serialize(); 
+            var datos = $('#formulario_login').serialize();
+            var url = '?page=login&op=login';
+            friendlyURL(url).then(function(ruta){ 
             $.ajax({
                 type:'POST',
                 data: datos,
-                url:'modulo/login/controlador/controller_login.php?op=login',
+                url:ruta,
                 
                 success:(function(respuesta){
                     if (respuesta==1){
                         $('<span></span>').attr('class','log15').appendTo('.log3');
                         $('<a>* No existe este usuario</a>').attr('id','error_usuario').attr('class','error_usuario validar').appendTo('.log15');
                     }else if (respuesta=='"Los datos no coinciden"'){
-                        window.location.href='index.php?page=login';
+                        window.location.href='/FrameworkPHP/home/list';
                     }else{
                         var token= respuesta;
                     
                     localStorage.setItem('token',token);
-                    window.location.href='index.php?page=homepage';
+                    window.location.href='/FrameworkPHP/home/list';
                     
                     }
                 })
             });
+        });
         }
         
     });
