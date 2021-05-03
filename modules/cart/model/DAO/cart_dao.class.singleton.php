@@ -36,16 +36,30 @@ class cart_dao{
     public function delete_item($db,$arryArguments){
         $codProd = $arryArguments;
         $sql = "DELETE FROM liniafact WHERE codProd=$codProd";
+        // die($sql);
         return $db->ejecutar($sql);
 
     }
     public function insert_item($db,$arryArguments){
         $usuario = $arryArguments[0];
         $codArticulo = $arryArguments[1];
-        $codProd = $arryArguments;
         $sql = "INSERT INTO liniafact (codProd,codUser,cantidad) VALUES ($codArticulo,'$usuario','1')";
         return $db->ejecutar($sql);
 
+    }
+    public function validate_items($db,$arryArguments){
+        $usuario = $arryArguments[0];
+        $codArticulo = $arryArguments[1];
+        $sql = "SELECT * FROM liniafact WHERE  codUser='$usuario' AND codProd=$codArticulo";
+        // die($sql);
+        $stmt = $db->ejecutar($sql);
+        return $db->listar($stmt);
+    }
+    public function validate_cantity($db,$arryArguments){
+        $codProd = $arryArguments;
+        $sql = "SELECT cantidad FROM liniafact where codProd=$codProd";
+        $stmt = $db->ejecutar($sql);
+        return $db->listar($stmt);
     }
 
 }

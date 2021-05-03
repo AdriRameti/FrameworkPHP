@@ -115,9 +115,10 @@ function show_like(){
     
 }
 function click_heart(){
+    
     $(document).on('click','.clico',function(){
         if (localStorage.getItem('token')===null){
-            window.location.href="index.php?page=login"
+            window.location.href="/Framework/login/list"
         }else{
             var idHeart = this.getAttribute('id'); 
             var clases =this.getAttribute('class');
@@ -160,15 +161,17 @@ function pagination(correcto,consulta,filtrado1){
     var tallas=sessionStorage.getItem('tallas');
     if(correcto==1){
         var url="/Ejercicios_PHP/modulo/shop/controlador/controller_shop.php?op=countProdsSearch&nom="+nom+"&consulta="+consulta;
+        // var url ="?page="
         $('#pagiShop').empty();
     }else if(correcto!=1){
     if (filtrado1!=1){
-        // var url="/Ejercicios_PHP/modulo/shop/controlador/controller_shop.php?op=countProds&nom="+nom;
         var url ="?page=shop&op=countProds"
+        var data = {nom:nom};
         $('#pagiShop').empty();
 
     }else if (filtrado1==1){
-        var url="/Ejercicios_PHP/modulo/shop/controlador/controller_shop.php?op=countProdsFilters&nom="+nom+"&marcas="+marcas+"&tallas="+tallas; 
+        var url="/Ejercicios_PHP/modulo/shop/controlador/controller_shop.php?op=countProdsFilters&nom="+nom+"&marcas="+marcas+"&tallas="+tallas;
+         
         $('#pagiShop').empty();
     }
     }
@@ -178,7 +181,7 @@ function pagination(correcto,consulta,filtrado1){
         type:'POST',
         dataType:'JSON',
         url:url,
-        data: {nom:nom},
+        data: data,
         error:function(){
             console.log('Error pagination');
         },
@@ -513,7 +516,7 @@ function buscar(){
 }
 function rediLogin(){
     $(document).on('click','.icono_login',function(){
-    window.location.href="index.php?page=login";
+    window.location.href="/FrameworkPHP/login/list";
     return false;
     });
     }

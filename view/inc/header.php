@@ -78,6 +78,7 @@
         <script src="<?php echo SITE_PATH?>view/js/init.js"></script>
         <script src="<?php echo SITE_PATH?>modules/cart/vista/js/cart.js"></script>
         <script src="<?php echo SITE_PATH?>modules/shop/vista/js/shop.js"></script>
+        <script src="<?php echo SITE_PATH?>modules/login/vista/js/login.js"></script>
       </head>
 
       

@@ -33,9 +33,55 @@ class shop_bll{
         return $this->dao->select_search($this->db,$arryArguments);
     }
     public function showLikes($arryArguments){
-        return $this->dao->select_showLikes($this->db,$arryArguments);
+        $likes = $this->dao->select_showLikes($this->db,$arryArguments);
+        // return $this->dao->select_showLikes($this->db,$arryArguments);
+        $arry = array();
+        foreach ($likes as $valor){
+            array_push($arry,$valor);
+        }
+        echo json_encode($arry);
+        exit;
     }
     public function favorites($arryArguments){
-        return $this->dao->insert_favorites($this->db,$arryArguments);
+        try{
+            $this->dao->insert_favorites($this->db,$arryArguments);
+            $check = $this->dao->valida_favorites($this->db,$arryArguments);
+        }catch(Exception $e){
+            return ('error validacion fav');
+            exit;
+        }
+        foreach($check as $index => $value){
+            $fav = $value['favorito'];
+        }
+        // echo json_encode($fav);
+        // exit;
+        if($fav==0){
+        $like = $this->dao->update_likeUp($this->db,$arryArguments);
+
+            if ($like == true){
+                $valLike = 1;
+                return $valLike;
+            }else if($like == false){
+                return 'Error like';
+            }
+
+        }else if($fav==1){
+
+            try{
+                $this->dao->delete_favorites($this->db,$arryArguments);
+            $unlike =  $this->dao->update_unlike($this->db,$arryArguments);
+
+            }catch(Exception $e){
+                return ('error unlike');
+                exit;
+            }
+
+            if ($unlike == false){
+
+            }else if ($unlike == true){
+                $valLike = 2;
+                return $valLike;
+            }
+        }
     }
 }

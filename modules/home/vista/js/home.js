@@ -11,24 +11,24 @@ function cargar_cat_slider(){
         console.log("Error Slider");
     },
       success:(function(data){
-      
+        console.log(data[0].img);
               $('<div></div>').attr('id','Div2').appendTo('.cat_slider');
               $("#Div2").html(
                     '<div id="carrusel">'+
-                      '<a href="#" class="left-arrow"><img src="view/img/left-arrow.png" /></a>'+
-                      '<a href="#" class="right-arrow"><img src="view/img/right-arrow.png" /></a>'+
+                      '<a href="#" class="left-arrow"><img src="http://localhost/FrameworkPHP/view/img/left-arrow.png" /></a>'+
+                      '<a href="#" class="right-arrow"><img src="http://localhost/FrameworkPHP/view/img/right-arrow.png" /></a>'+
                       '<div class="carrusel">'+
                           '<div class="product" id="product_0">'+
-                              '<img src="'+data[0]+'" width="190" height="300" />'+
+                              '<img src="http://localhost/FrameworkPHP/'+data[0].img+'" width="190" height="300" />'+
                           '</div>'+
                           '<div class="product" id="product_1">'+
-                              '<img src="'+data[1]+'" width="190" height="300" />'+
+                              '<img src="http://localhost/FrameworkPHP/'+data[1].img+'" width="190" height="300" />'+
                           '</div>'+
                           '<div class="product" id="product_2">'+
-                              '<img src="'+data[2]+'" width="190" height="300" />'+
+                              '<img src="http://localhost/FrameworkPHP/'+data[2].img+'" width="190" height="300" />'+
                           '</div>'+
                           '<div class="product" id="product_3">'+
-                              '<img src="'+data[3]+'" width="190" height="300" />'+
+                              '<img src="http://localhost/FrameworkPHP/'+data[3].img+'" width="190" height="300" />'+
                           '</div>'+
                         //   '<div class="product" id="product_4">'+
                         //       '<img src="'+data[4]+'" width="190" height="300" />'+
@@ -149,7 +149,7 @@ function buscar2(){
   }
   function rediLogin(){
     $(document).on('click','.icono_login',function(){
-    window.location.href="index.php?page=login";
+    window.location.href="/FrameworkPHP/login/list";
     return false;
     });
     }

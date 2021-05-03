@@ -45,7 +45,7 @@ function show_cart(){
                     $('<a>Total</a>').appendTo('#total');
 
                     $('<div></div>').attr('class','table_preu').attr('id','preu').appendTo('#contenedor');
-                    $('<a>0€</a>').attr('id','preu2').appendTo('#preu');
+                    $('<a>'+total+'€</a>').attr('id','preu2').appendTo('#preu');
                     $('<a>Seguir Comprando</a>').attr('class','btn-cart botones').attr('id','go').appendTo('#button-cart');
                     $('<a>Finalizar compra</a>').attr('class','btn-cart botones').attr('id','ext').appendTo('#button-cart');
                 })
@@ -93,7 +93,7 @@ function finishcart(){
            });
         });
        }else{
-           window.location.href="index.php?page=login";
+           window.location.href="/FrameworkPHP/login/list";
        }
     });
 }
@@ -132,8 +132,9 @@ function update_cantity(){
             success:(function(data){
                 // alert(data);
                 if (data==0){
+                    // alert("entro");
                     var url2 = '?page=cart&op=delete_item';
-                    friendlyURL(url).then(function(ruta2){
+                    friendlyURL(url2).then(function(ruta2){
                     $.ajax({
                         type: 'POST',
                         dataType: 'JSON',
@@ -141,7 +142,7 @@ function update_cantity(){
                         data:{codProd:codProd},
                         success:(function(data){
                             console.log(data);                  
-                            location.reload();
+                            // location.reload();
                         })
                     });
                 });
@@ -149,14 +150,14 @@ function update_cantity(){
             })
         });
     });
-        location.reload();
+        // location.reload();
     });
 }
 
 function click_items_cart(){
     $(document).on('click','.cart',function(){
         if (localStorage.getItem('token')===null){
-            window.location.href="index.php?page=login"
+            window.location.href="/FrameworkPHP/login/list";
         }else{
             var usuario = localStorage.getItem('nomUser');
             var idHeart = this.getAttribute('id'); 

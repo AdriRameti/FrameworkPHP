@@ -84,13 +84,29 @@ function login_view(){
                     $('<p>Al registrarte, aceptas nuestas Condiciones de uso y Políticas de privacidad</p>').appendTo('.log2');
                     $('<p>¿Ya tienes una cuenta? </p>').attr('class','redi').appendTo('.log2');
                     $('<a>Iniciar Sesion</a>').attr('class','link_regist logeo').appendTo('.redi');
+                    $('<p>¿Has olvidado la contraseña? </p>').attr('class','redi2').appendTo('.log2');
+                    $('<a>Recuperar contraseña</a>').attr('class','link_regist recover').appendTo('.redi2');
                     show_logins();
-                    show_registers(); 
+                    show_registers();
+                    recover(); 
         }
         
     });
 });
     
+}
+function recover(){
+    $(document).on('click','.recover',function(){;
+        $('#login_views1').empty(); 
+        $('<form></form>').attr('class','formulario_register log1').attr('name','formulario_recover').attr('id','formulario_recover').appendTo('#login_views1');
+        $('<h1>Recccuperar contraseña</h1>').appendTo('.log1');
+        $('<div></div>').attr('class','log4').appendTo('.log1');
+        $('<i></i>').attr('class','fas fa-key icono').appendTo('.log4');
+        $('<input></input>').attr('type','password').attr('id','contrase').attr('name','contrase').attr('placeholder','Contraseña').attr('class','caja_texto').appendTo('.log4');
+        $('<div></div>').attr('class','log5').appendTo('.log1');
+        $('<i></i>').attr('class','fas fa-key icono').appendTo('.log5');
+        $('<input></input>').attr('type','password').attr('id','contrase').attr('name','contrase').attr('placeholder','Nueva Contraseña').attr('class','caja_texto').appendTo('.log5');
+    });
 }
 function show_logins(){
     $(document).on('click','.logeo',function(){;

@@ -64,13 +64,13 @@ class controller_shop{
     }
     public function favorites(){
         $codArticulo = $_POST['codArticulo'];
-        $codUsuario = $_POST['codUsuario'];
+        $codUsuario = $_POST['nomUsuario'];
         $array = array();
         array_push($array, $codArticulo);
         array_push($array, $codUsuario);
 
         $json = array();
-        $json = Content::LoadModel(MODEL_MODEL_SHOP,"shop_model","showLikes",$array);
+        $json = Content::LoadModel(MODEL_MODEL_SHOP,"shop_model","favorites",$array);
         echo json_encode($json);
     }
 }

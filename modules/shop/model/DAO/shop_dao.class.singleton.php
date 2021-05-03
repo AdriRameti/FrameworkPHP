@@ -74,4 +74,10 @@ class shop_dao{
         $sql = "UPDATE favoritos SET favorito=0 WHERE codArticulo=$codigo";
         return $db->ejecutar($sql);
     }
+    public function valida_favorites($db,$arryArguments){
+        $codigo = $arryArguments[0];
+        $sql = "SELECT favorito FROM favoritos where codArticulo=$codigo";
+        $stmt = $db->ejecutar($sql);
+        return $db->listar($stmt);
+    }
 }
