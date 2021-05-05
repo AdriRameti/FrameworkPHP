@@ -25,23 +25,11 @@ class Content{
     }else {
             throw new Exception();
     }
-    //     if (file_exists($model)) {
-    //         include_once($model);
-    //         $modelClass = $model_name;
-
-    //         $object = $modelClass::getInstance();
-    //         if (isset($arrArgument)){
-    //             if (isset($arrArgument2)) {
-    //                 //return $obj->$function($arrArgument,$arrArgument2);
-    //                 return call_user_func(array($object, $function),$arrArgument,$arrArgument2);
-    //             }else{
-    //             //return $obj->$function($arrArgument);
-    //             return call_user_func(array($object, $function),$arrArgument);
-    //         }   
-            
-    //     } else {
-    //         throw new Exception();
-    //     }
-    // }
-}
+    }
+    function generate_Token($longitud){
+        if ($longitud < 4) {
+            $longitud = 4;
+        }
+        return bin2hex(openssl_random_pseudo_bytes(($longitud - ($longitud % 2)) / 2));
+    }
 }

@@ -142,7 +142,7 @@ function update_cantity(){
                         data:{codProd:codProd},
                         success:(function(data){
                             console.log(data);                  
-                            // location.reload();
+                            location.reload();
                         })
                     });
                 });
@@ -150,7 +150,7 @@ function update_cantity(){
             })
         });
     });
-        // location.reload();
+        location.reload();
     });
 }
 

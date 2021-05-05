@@ -23,9 +23,7 @@ class cart_bll{
         return $this->dao->delete_Cart($this->db,$arryArguments);
     }
     public function update_cantity($arryArguments){
-        echo json_encode($arryArguments);
-        exit;
-        // return $this->dao->update_cantity($this->db,$arryArguments);
+        return $this->dao->update_cantity($this->db,$arryArguments);
     }
     public function less_cantity($arryArguments){
         try{

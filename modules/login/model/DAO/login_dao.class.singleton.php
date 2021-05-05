@@ -23,9 +23,9 @@ class login_dao{
         $hashavatar= md5( strtolower( trim( $email ) ) );
         $avatar ="https://www.gravatar.com/avatar/$hashavatar?s=40&d=identicon";
 
-        $sql = "INSERT INTO usuario (correo,contrasenya,avatar,tipo,nombre) VALUES ('$email','$safe_passw','$avatar','$tipo','$nombre')";
-        $stmt =$db->ejecutar($sql);
-        return $db->listar($stmt);
+        $sql = "INSERT INTO usuario (correo,contrasenya,avatar,tipo,nombre,verify) VALUES ('$email','$safe_passw','$avatar','$tipo','$nombre','0')";
+        return $db->ejecutar($sql);
+        // return $db->listar($stmt);
     }
     public function validate_user($db,$arryArguments){
         $email = $arryArguments[0];
@@ -39,5 +39,14 @@ class login_dao{
         $stmt =$db->ejecutar($sql);
         return $db->listar($stmt);
     }
-
+    public function select_user_name($db,$usuari){
+        $sql ="SELECT nombre,avatar,tipo FROM usuario WHERE nombre LIKE '$usuari%' OR nombre='$usuari'";
+        $stmt = $db->ejecutar($sql);
+        return $db-> listar($stmt);
+    }
+    public function insert_tokenVerify($db,$secureToken){
+        $sql = "INSERT INTO tokens () VALUES ('$secureToken')";
+        return $db->ejecutar($sql);
+        // return $db->listar($stmt);
+    }
 }

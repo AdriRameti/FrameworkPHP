@@ -1,24 +1,29 @@
 function cargar_menus(){
 var token1 = localStorage.getItem('token');
+// alert(token1);
 // var token2 =token1.split(" ");
 // var token = token2[1].replace(/['"]+/g, '');
  if(token1 != null){
     var token2 =token1.split(" ");
     var token = token2[0].replace(/['"]+/g, '');
-  
+    var url = '?page=login&op=menu';
+    friendlyURL(url).then(function(ruta){
+        // /Ejercicios_PHP/modulo/login/controlador/controller_login.php?op=menu&token='+token,
     $.ajax({
-        type:'GET',
+        type:'POST',
         dataType:'JSON',
-        url:'/Ejercicios_PHP/modulo/login/controlador/controller_login.php?op=menu&token='+token,
+        url:ruta,
+        data:{token:token},
         success:(function(data){
-            localStorage.setItem('nomUser',data[0]);
-            switch (data[2]){
+            console.log(data);
+            localStorage.setItem('nomUser',data[0].nombre);
+            switch (data[0].tipo){
                case 'Cliente':
 
-                clienteMenu(data[0],data[1]);
+                clienteMenu(data[0].nombre,data[0].avatar);
                    break;
                 case 'Admin':
-                    adminMenu(data[0],data[1]);
+                    adminMenu(data[0].nombre,data[0].avatar);
                     break;
                 default:
                     menu_global();
@@ -27,14 +32,15 @@ var token1 = localStorage.getItem('token');
             log_out();
         })
     });
-}else if(token==null){
+});
+}else if(token==null || !token){
     menu_global();
 }
 }
 function log_out(){
     $(document).on('click','.user-out',function(){
         localStorage.removeItem('token');
-        window.location.href="/home/list";
+        window.location.href="/FrameworkPHP/home/list";
     })
 }
 function adminMenu(nombre,avatar){

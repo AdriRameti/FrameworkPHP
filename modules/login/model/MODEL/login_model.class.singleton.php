@@ -24,4 +24,10 @@ class login_model {
     public function login($arryArguments){
         return $this->bll->login($arryArguments);
     }
+    public function menu($arryArguments){
+        return $this->bll->menu($arryArguments);
+    }
+    public function tokenVerify($arryArguments){
+        return $this->bll->tokenVerify($arryArguments);
+    }
 }

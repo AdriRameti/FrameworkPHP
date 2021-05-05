@@ -84,8 +84,6 @@ function login_view(){
                     $('<p>Al registrarte, aceptas nuestas Condiciones de uso y Políticas de privacidad</p>').appendTo('.log2');
                     $('<p>¿Ya tienes una cuenta? </p>').attr('class','redi').appendTo('.log2');
                     $('<a>Iniciar Sesion</a>').attr('class','link_regist logeo').appendTo('.redi');
-                    $('<p>¿Has olvidado la contraseña? </p>').attr('class','redi2').appendTo('.log2');
-                    $('<a>Recuperar contraseña</a>').attr('class','link_regist recover').appendTo('.redi2');
                     show_logins();
                     show_registers();
                     recover(); 
@@ -99,13 +97,25 @@ function recover(){
     $(document).on('click','.recover',function(){;
         $('#login_views1').empty(); 
         $('<form></form>').attr('class','formulario_register log1').attr('name','formulario_recover').attr('id','formulario_recover').appendTo('#login_views1');
-        $('<h1>Recccuperar contraseña</h1>').appendTo('.log1');
-        $('<div></div>').attr('class','log4').appendTo('.log1');
+        $('<h1>Recuperar Contraseña</h1>').appendTo('.log1');
+        $('<div></div>').attr('class','contenedor_register log2').appendTo('.log1');
+        $('<div></div>').attr('class','input_contenedor log3').appendTo('.log2');
+        $('<i></i>').attr('class','fas fa-envelope icono').appendTo('.log3');
+        $('<input></input>').attr('type','text').attr('id','email').attr('name','email').attr('placeholder','Correo Electrónico').attr('class','caja_texto').appendTo('.log3');
+        $('<br></br>').appendTo('.log3');
+        $('<a></a>').attr('id','error_email').attr('class','error_email validar').appendTo('.log3');
+        $('<div></div>').attr('class','input_contenedor log4').appendTo('.log2');
         $('<i></i>').attr('class','fas fa-key icono').appendTo('.log4');
         $('<input></input>').attr('type','password').attr('id','contrase').attr('name','contrase').attr('placeholder','Contraseña').attr('class','caja_texto').appendTo('.log4');
-        $('<div></div>').attr('class','log5').appendTo('.log1');
-        $('<i></i>').attr('class','fas fa-key icono').appendTo('.log5');
-        $('<input></input>').attr('type','password').attr('id','contrase').attr('name','contrase').attr('placeholder','Nueva Contraseña').attr('class','caja_texto').appendTo('.log5');
+        $('<span></span>').attr('id','error_contra').attr('class','error_contra validar').appendTo('.log4');
+        $('<div></div>').attr('class','input_contenedor log8').appendTo('.log2');
+        $('<i></i>').attr('class','fas fa-key icono').appendTo('.log8');
+        $('<input></input>').attr('type','password').attr('id','contrase').attr('name','contrase').attr('placeholder','Nueva contraseña').attr('class','caja_texto').appendTo('.log8');
+        $('<span></span>').attr('id','error_contra').attr('class','error_contra validar').appendTo('.log8');
+        $('<input></input>').attr('type','button').attr('value','Confirmar').attr('class','boton_register').attr('id','btn_register').attr('onclick','validate_register()').appendTo('.log2');
+        $('<p>Al registrarte, aceptas nuestas Condiciones de uso y Políticas de privacidad</p>').appendTo('.log2');
+        $('<p>¿Ya tienes una cuenta? </p>').attr('class','redi').appendTo('.log2');
+        $('<a>Iniciar Sesion</a>').attr('class','link_regist logeo').appendTo('.redi');
     });
 }
 function show_logins(){
@@ -127,6 +137,8 @@ function show_logins(){
         $('<p>Al registrarte, aceptas nuestas Condiciones de uso y Políticas de privacidad</p>').appendTo('.log2');
         $('<p>¿No tienes una cuenta? </p>').attr('class','redi').appendTo('.log2');
         $('<a>Registrate</a>').attr('class','link_regist registro').appendTo('.redi');
+        $('<p>¿Has olvidado la contraseña? </p>').attr('class','redi2').appendTo('.log2');
+        $('<a>Recuperar contraseña</a>').attr('class','link_regist recover').appendTo('.redi2');
 
     });
 }
@@ -168,17 +180,32 @@ function register(){
                 data: data,
                 url: ruta,
                 success:(function(respuesta){
-                    if(respuesta==1){
-                        // console.log(window.location.href); Como saber en que url estamos en js
-                        $('<br></br>').appendTo('.log5');
-                        $('<span></span>').attr('class','log12').appendTo('.log5');
-                        $('<a>* Ya existe este usuario</a>').attr('id','error_usuario').attr('class','error_usuario validar').appendTo('.log12');
+                    var email = respuesta.replace(/['"]+/g, '')
+                    var data2 = {email:email};
+                    var url2 = '?page=login&op=verify';
+                    friendlyURL(url2).then(function(ruta){
+                        $.ajax({
+                            type:'POST',
+                            data: data2,
+                            url: ruta,
+                            success:(function(data){
+                                alert(data);
+                                
+            
+                            })
+                        });
+                    });
+                    // if(respuesta==1){
+                    //     // console.log(window.location.href); Como saber en que url estamos en js
+                    //     $('<br></br>').appendTo('.log5');
+                    //     $('<span></span>').attr('class','log12').appendTo('.log5');
+                    //     $('<a>* Ya existe este usuario</a>').attr('id','error_usuario').attr('class','error_usuario validar').appendTo('.log12');
                        
                         
-                    }else{
-                        window.location.href="/FrameworkPHP/login/list";
+                    // }else{
+                    //     window.location.href="/FrameworkPHP/login/list";
 
-                    }
+                    // }
                     
 
                 })
@@ -207,7 +234,7 @@ function login(){
                         window.location.href='/FrameworkPHP/home/list';
                     }else{
                         var token= respuesta;
-                    
+                    // alert(token);
                     localStorage.setItem('token',token);
                     window.location.href='/FrameworkPHP/home/list';
                     
