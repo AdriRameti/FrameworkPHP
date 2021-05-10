@@ -144,6 +144,13 @@ input[type="password"]{
 	text-align: center;
 	color: #999;
 }
+.imgLog{
+	width: 75;
+	height: 50;
+}
+.imgLog:hover{
+	cursor: pointer;
+}
 .boton_register{
 	border: none;
 	width: 100%;

@@ -26,7 +26,7 @@ class Content{
             throw new Exception();
     }
     }
-    function generate_Token($longitud){
+    public static function generate_Token($longitud){
         if ($longitud < 4) {
             $longitud = 4;
         }

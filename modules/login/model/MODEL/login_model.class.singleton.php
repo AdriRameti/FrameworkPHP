@@ -27,7 +27,23 @@ class login_model {
     public function menu($arryArguments){
         return $this->bll->menu($arryArguments);
     }
-    public function tokenVerify($arryArguments){
-        return $this->bll->tokenVerify($arryArguments);
+    public function tokenVerify($mailClient){
+        return $this->bll->tokenVerify($mailClient);
     }
+    public function verifyUser($arryArguments){
+        return $this->bll->verifyUser($arryArguments);
+    }
+    public function recover($email){
+        return $this->bll->tokenVerifyRecover($email);
+    }
+    public function recoverPass($arryArguments){
+        return $this->bll->recoverPass($arryArguments);
+    }
+    public function socialGit($arryArguments){
+        return $this->bll->socialGit($arryArguments);
+    }
+    public function socialGoogle($arryArguments){
+        return $this->bll->socialGoogle($arryArguments);
+    }
+    
 }

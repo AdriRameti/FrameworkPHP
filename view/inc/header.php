@@ -79,6 +79,10 @@
         <script src="<?php echo SITE_PATH?>modules/cart/vista/js/cart.js"></script>
         <script src="<?php echo SITE_PATH?>modules/shop/vista/js/shop.js"></script>
         <script src="<?php echo SITE_PATH?>modules/login/vista/js/login.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/3.5.2/firebase.js"></script>
+        <!-- <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-firestore.js"></script> -->
+        <!-- <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script> -->
       </head>
 
       
